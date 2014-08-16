@@ -8,7 +8,7 @@ var getElementsByClassName = function(className){
   // your code here
   var found = [];
   var that;
-  if (this === window || this === document){
+  if (this === window || this === document || this == document.body){
     // When called on the document object, the complete document is searched, including the root node
     that = document.body;
     if (that.classList.contains(className)){
