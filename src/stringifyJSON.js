@@ -4,4 +4,26 @@
 // but you don't so you're going to write it from scratch:
 var stringifyJSON = function(obj) {
   // your code goes here
+  if (obj === null){
+    return 'null'
+  } else if (obj === undefined) {
+    return 'undefined';
+  } else if (obj instanceof Function){
+    return 'undefined';
+  } else if (obj instanceof Array){
+    return '[' + _.map(obj, stringifyJSON).join(',') + ']';
+  } else if (obj instanceof Object) {
+    return '{' + _.filter(_.map(obj, function (item, key){
+      var v = stringifyJSON(item);
+      if (v !== 'undefined'){
+        return '"' + key + '":' + v;
+      } else {
+        return null;
+      }
+    }), function(item){return item !== null;}).join(',') + '}';
+  } else if (typeof obj === 'string'){
+    return '"' + obj + '"';
+  } else {
+    return obj.toString();
+  }
 };
