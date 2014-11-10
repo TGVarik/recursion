@@ -8,6 +8,27 @@ var getElementsByClassName = function(className){
   // your code here
   var found = [];
   var that;
+
+  var hasClass = function(node, className){
+    if (node.classList){
+      if (node.classList.contains(className)){
+        return true;
+      }
+    }
+    return false;
+  };
+
+  var searchNodes = function(node, className){
+    if (hasClass(node, className)){
+      found.push(node);
+    }
+    if (node.children){
+      if (node.children.length > 0){
+
+      }
+    }
+  };
+
   if (this === window || this === document || this == document.body){
     // When called on the document object, the complete document is searched, including the root node
     that = document.body;
@@ -19,15 +40,12 @@ var getElementsByClassName = function(className){
     that = this;
   }
   for (el in that.children) {
-    if (that.children[el].classList) {
-      if (that.children[el].classList.contains(className)) {
-        found.push(that.children[el]);
-      }
+    var child = that.children[el];
+    if (child.classList && child.classList.contains(className)) {
+      found.push(child);
     }
-    if (that.children[el].children) {
-      if (that.children[el].children.length > 0) {
-        found = found.concat(getElementsByClassName.call(that.children[el], className));
-      }
+    if (child.children && child.children.length > 0) {
+      found = found.concat(getElementsByClassName.call(child, className));
     }
   }
   return found;
